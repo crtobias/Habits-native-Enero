@@ -10,8 +10,8 @@
   "extends": "expo/tsconfig.base",
   "include": [
     "global.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
     "nativewind-env.d.ts"
-  ]
+, "src/app/index.jsx", "src/app/habits.jsx", "src/app/_layout.jsx", "src/app/profile.jsx", "src/app/options.jsx"  ]
 }
