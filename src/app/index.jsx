@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Alert, TextInput,Text } from "react-native";
+import { View, Button, Alert, TextInput, Text } from "react-native";
 import { Link } from "expo-router";
 import { useAppContext } from "@/context/Appcontext";
 
@@ -7,10 +7,13 @@ import { useAppContext } from "@/context/Appcontext";
 export default function Page() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isNotVerify, setIsNotVerify] = useState(false);
+  const [incorrectoPas, SetincorrectoPas] = useState(false);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { login, verifyEmail } = useAppContext();
+  const { login, verifyEmail, changePassword } = useAppContext();
 
 
 
@@ -21,8 +24,10 @@ export default function Page() {
       setIsLoggedIn(true);
     } else if (result == 2) {
       setIsNotVerify(true)
+    } else if (result == 3) {
+      SetincorrectoPas(true)
     } else {
-      alert('occurio un error inesperado')
+      alert('occurio un error inesperado verifique su email o name o intente mas tarde')
     }
   };
 
@@ -34,6 +39,12 @@ export default function Page() {
     } else {
       alert("ocurrio un error inesperado")
     }
+  }
+
+  
+  const handleNewPassword = async () => {
+    changePassword(email,password)
+    SetincorrectoPas(false)
   }
 
 
@@ -77,7 +88,7 @@ export default function Page() {
         </Link>
       )}
 
-      {/* sector para verficiar email y no tener que ir a otra pagina */}
+
       {isNotVerify && (
         <View>
           <Text>No estas verificado quieres verificarte?</Text>
@@ -94,6 +105,34 @@ export default function Page() {
           />
         </View>
       )}
+
+      {incorrectoPas && (
+        <View>
+          <Text>olvidaste tu password?</Text>
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            placeholder="Correo electrónico"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            placeholder="New Password"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <Button
+            title="Cambiar"
+            onPress={handleNewPassword}
+            disabled={!isFormComplete}
+          />
+
+        </View>
+      )}
+
 
 
 

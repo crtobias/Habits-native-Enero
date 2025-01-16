@@ -62,18 +62,56 @@ export const AppProvider = ({ children }) => {
           setToken(data)
           setIsLoggedIn(true);
           return 1;
+        } else if (d.message == "Contraseña incorrecta"){
+          console.log('Contraseña incorrecta');
+          return 3
+        } else if (d.message == "Usuario no verificado"){
+          console.log("Usuario no verificado");
+          return 2
         } else {
-          console.log('usuario no verificado');
-          return 2;
+          return 0
         }
 
       } else {
         console.log(`Login Failed: ${d.message || "Something went wrong"}`);
-        return 2;
+        if (d.message == "Contraseña incorrecta") {
+          alert("password incorrecto")
+          return 3
+        } else if (d.message == "Usuario no verificado"){
+          alert("usuario no verificado")
+          return 2
+        }
+        return 0;
       }
     } catch (error) {
       alert("Error: Something went wrong with the network");
       console.log(error);
+      return false;
+    }
+  };
+
+  const changePassword = async (email, newPassword) => {
+    try {
+      const response = await fetch("http://localhost:3000/users/send-email-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, newPassword }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        alert("Correo de confirmación enviado para cambiar la contraseña");
+        return true;
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error);
+      alert("Ocurrió un error inesperado al cambiar la contraseña");
       return false;
     }
   };
@@ -83,7 +121,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ showAlert, login,verifyEmail  }}>
+    <AppContext.Provider value={{ showAlert, login,verifyEmail ,changePassword  }}>
       {children}
     </AppContext.Provider>
   );
