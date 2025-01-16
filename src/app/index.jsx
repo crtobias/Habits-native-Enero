@@ -9,6 +9,8 @@ export default function Page() {
   const [isNotVerify, setIsNotVerify] = useState(false);
   const [incorrectoPas, SetincorrectoPas] = useState(false);
 
+  const [log, setLog] = useState(false);
+  const [create, setCreate] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,10 +43,19 @@ export default function Page() {
     }
   }
 
-  
+
   const handleNewPassword = async () => {
-    changePassword(email,password)
+    changePassword(email, password)
     SetincorrectoPas(false)
+  }
+
+  const handleactivarLogin = async () => {
+    setLog(true)
+    setCreate(false)
+  }
+  const handleactivarCreate = async () => {
+    setCreate(true)
+    setLog(false)
   }
 
 
@@ -53,34 +64,54 @@ export default function Page() {
   return (
     <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
 
-      <TextInput
-        style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
-        placeholder="Nombre"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
-        placeholder="Correo electrónico"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
-        placeholder="Contraseña"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
+
+      <View className="flex flex-row gap-2">
+        <Button
+          title="Login"
+          onPress={handleactivarLogin}
+        ></Button>
+        <Button
+          title="Create"
+          onPress={handleactivarCreate}
+        ></Button>
+      </View>
+
+      {create && (
+        <View>Aca va a estar el formulario de crear user</View>
+      )}
 
 
-      <Button
-        title="Iniciar Sesión"
-        onPress={handleLogin}
-        disabled={!isFormComplete}
-      />
 
+      {log && (
+        <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
+          Login
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            placeholder="Correo electrónico"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            placeholder="Contraseña"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <Button
+            title="Iniciar Sesión"
+            onPress={handleLogin}
+            disabled={!isFormComplete}
+          />
+        </View>
+      )}
 
       {isLoggedIn && (
         <Link href="/habits" className="mt-4 text-blue-600">
