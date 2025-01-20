@@ -15,6 +15,9 @@ module.exports = {
           dark: "#374151",
         },
       },
+      fontSize: {
+        'xxs': '4rem', 
+      },
     },
   },
   future: {

@@ -8,6 +8,8 @@ export const AppProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [Token, setToken] = useState()
 
+  const [dataUser, setDataUser] = useState()
+
   const verifyEmail = async (email) => {
     try {
       const response = await fetch("http://localhost:3000/users/verify", {
@@ -19,21 +21,53 @@ export const AppProvider = ({ children }) => {
           email: email,
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         alert("Correo electrónico verificado correctamente!");
-        return true;  
+        return true;
       } else {
         alert(`Error al verificar el correo: ${data.message || "Algo salió mal"}`);
-        return false; 
+        return false;
       }
     } catch (error) {
       alert("Error: Algo salió mal con la red");
-      return false;  
+      return false;
     }
   };
+
+  const createUser = async (email, name, password) => {
+    try {
+      if (!email || !name || !password) {
+        console.log("todos los campos son requeridos");
+      }
+
+      const response = await fetch('http://localhost:3000/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, name, password }),
+      });
+
+
+
+      if (!response.ok) {
+        console.log("error al crear el usuario");
+        return 2
+      }
+
+
+      const data = await response.json();
+      console.log('Usuario creado:', data);
+      return 1
+    } catch (error) {
+      console.error('Error:', error.message);
+      return 2
+    }
+  };
+
 
 
   const login = async (name, email, password) => {
@@ -53,19 +87,19 @@ export const AppProvider = ({ children }) => {
       const d = await response.json();
       const data = decodeToken(d.token);
       console.log(data);
-      
+
 
       if (response.ok) {
         console.log("Login Success! Redirecting...");
-        
+
         if (data.rol === "user") {
           setToken(data)
           setIsLoggedIn(true);
           return 1;
-        } else if (d.message == "Contraseña incorrecta"){
+        } else if (d.message == "Contraseña incorrecta") {
           console.log('Contraseña incorrecta');
           return 3
-        } else if (d.message == "Usuario no verificado"){
+        } else if (d.message == "Usuario no verificado") {
           console.log("Usuario no verificado");
           return 2
         } else {
@@ -77,7 +111,7 @@ export const AppProvider = ({ children }) => {
         if (d.message == "Contraseña incorrecta") {
           alert("password incorrecto")
           return 3
-        } else if (d.message == "Usuario no verificado"){
+        } else if (d.message == "Usuario no verificado") {
           alert("usuario no verificado")
           return 2
         }
@@ -99,7 +133,7 @@ export const AppProvider = ({ children }) => {
         },
         body: JSON.stringify({ email, newPassword }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         alert("Correo de confirmación enviado para cambiar la contraseña");
@@ -116,12 +150,42 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const showAlert = () => {
-    Alert.alert("React Context", "test React Context");
+  const getUserData = async (id, rol) => {
+    try {
+      if (!id || !rol) {
+        console.log("falta id o rol");
+        return 2
+      }
+
+      const response = await fetch(`http://localhost:3000/users/getUser/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        console.log(`Error en la solicitud: ${response.status}`);
+        return 0
+      }
+
+      const data = await response.json();
+      console.log('Datos del usuario:', data);
+      setDataUser(data)
+      return 1;
+    } catch (error) {
+      console.error('Error:', error.message);
+      return 0;
+    }
   };
 
+
+
+
+
+
   return (
-    <AppContext.Provider value={{ showAlert, login,verifyEmail ,changePassword  }}>
+    <AppContext.Provider value={{setToken , createUser, login, verifyEmail, changePassword, Token, dataUser, setDataUser, getUserData }}>
       {children}
     </AppContext.Provider>
   );

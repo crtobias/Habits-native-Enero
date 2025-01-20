@@ -7,7 +7,9 @@ import { useAppContext } from "@/context/Appcontext";
 export default function Page() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isNotVerify, setIsNotVerify] = useState(false);
+
   const [incorrectoPas, SetincorrectoPas] = useState(false);
+  const [incorrectoPasDos, SetincorrectoPasDos] = useState(false);
 
   const [log, setLog] = useState(false);
   const [create, setCreate] = useState(false);
@@ -15,9 +17,18 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { login, verifyEmail, changePassword } = useAppContext();
+  const { login, verifyEmail, changePassword, createUser } = useAppContext();
 
-
+  const handleCreate = async () => {
+    let result = await createUser(name, email, password);
+    if (result = 1) {
+      alert("usuario creado Porfavor verifique su email y inicie sesion")
+      setCreate(false);
+      setLog(true);
+    } else {
+      alert("ocurrio un error o el usuario ya esta en uso")
+    }
+  }
 
 
   const handleLogin = async () => {
@@ -52,20 +63,30 @@ export default function Page() {
   const handleactivarLogin = async () => {
     setLog(true)
     setCreate(false)
+    SetincorrectoPas(false)
+    SetincorrectoPasDos(false)
   }
   const handleactivarCreate = async () => {
     setCreate(true)
     setLog(false)
+    SetincorrectoPas(false)
+    SetincorrectoPasDos(false)
   }
 
+  const handleChangePass = () => {
+    setLog(false)
+    SetincorrectoPasDos(true)
+    SetincorrectoPas(false)
+  }
 
   const isFormComplete = (email || name) && password;
+  const isFormCreateComplete = email && name && password;
 
   return (
     <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
 
 
-      <View className="flex flex-row gap-2">
+      <View className="flex flex-row gap-2 mt-8">
         <Button
           title="Login"
           onPress={handleactivarLogin}
@@ -76,15 +97,44 @@ export default function Page() {
         ></Button>
       </View>
 
+      <Text className="text-xxs mt-14">Habits</Text>
+
       {create && (
-        <View>Aca va a estar el formulario de crear user</View>
+        <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
+          Crear Usuario
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            placeholder="Correo electrónico"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            placeholder="Contraseña"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <Button
+            title="Crear Usuario"
+            onPress={handleCreate}
+            disabled={!isFormCreateComplete}
+          />
+        </View>
       )}
 
 
 
       {log && (
         <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
-          Login
+          <Text>Login</Text>
           <TextInput
             style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Nombre"
@@ -114,8 +164,8 @@ export default function Page() {
       )}
 
       {isLoggedIn && (
-        <Link href="/habits" className="mt-4 text-blue-600">
-          Ya puede Ingresar Ingresar
+        <Link href="/habits" className="mt-4 text-blue-600 mb-10">
+          <Text className="text-xl">Ya puedes ingresar</Text>
         </Link>
       )}
 
@@ -139,7 +189,16 @@ export default function Page() {
 
       {incorrectoPas && (
         <View>
-          <Text>olvidaste tu password?</Text>
+          <Button
+            title="Queres cambiar el password?"
+            onPress={handleChangePass}
+          />
+        </View>
+      )}
+
+      {incorrectoPasDos && (
+        <View>
+          <Text>Cambiar Password</Text>
           <TextInput
             style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Correo electrónico"
@@ -163,6 +222,7 @@ export default function Page() {
 
         </View>
       )}
+
 
 
 
