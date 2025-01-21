@@ -1,6 +1,6 @@
 import "../global.css";
 import { Slot, usePathname } from "expo-router";
-import { View, Image } from "react-native";
+import { View, Image , Text} from "react-native";
 import { Link, } from "expo-router";
 import { AppProvider } from "@/context/Appcontext";
 
@@ -38,6 +38,17 @@ function Header() {
           </View>
         </Link>
 
+        <Link
+          href="/create"
+          className="w-full"
+        >
+          <View className="bg-lavanda w-full h-40 rounded-tl-2xl rounded-bl-2xl flex justify-center items-center">
+          <Image
+              source={require("../assets/Add.png")}
+              style={{ width: 24, height: 24, marginBottom: 4 }}
+            />
+          </View>
+        </Link>
 
         <Link
           href="/profile"
@@ -63,6 +74,7 @@ function Header() {
             />
           </View>
         </Link>
+        
       </View>
     </View>
   );

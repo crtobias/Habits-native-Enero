@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
   const [Token, setToken] = useState()
 
   const [dataUser, setDataUser] = useState()
+  const [habits , setHabit] = useState([])
 
   const verifyEmail = async (email) => {
     try {
@@ -172,6 +173,7 @@ export const AppProvider = ({ children }) => {
       const data = await response.json();
       console.log('Datos del usuario:', data);
       setDataUser(data)
+      setHabit(data.habits)
       return 1;
     } catch (error) {
       console.error('Error:', error.message);
@@ -180,12 +182,99 @@ export const AppProvider = ({ children }) => {
   };
 
 
+  const createHabit = async (name, goalType,userId) => {
+    try {
+      const response = await fetch("http://localhost:3000/habit/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          goalType,
+          userId,
+        }),
+      });
+  
+      if (response.ok) {
+        const newHabit = await response.json();
+        
+        setHabit((prevHabits) => [...prevHabits, newHabit]);
+        alert("Hábito creado exitosamente!");
+        return true;
+      } else {
+        const data = await response.json();
+        alert(`Error: ${data.message || "Algo salió mal"}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al crear el hábito:", error);
+      alert("Error inesperado al crear el hábito.");
+      return false;
+    }
+  };
+  
+
+  const deleteHabit = async (habitId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/habit/delete/${habitId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.ok) {
+        setHabit((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
+        alert("Hábito eliminado exitosamente!");
+        return true;
+      } else {
+        const data = await response.json();
+        alert(`Error: ${data.message || "Algo salió mal"}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al eliminar el hábito:", error);
+      alert("Error inesperado al eliminar el hábito.");
+      return false;
+    }
+  };
+  
 
 
-
+  const trackHabitDate = async (habitId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/habit/addTrack/${habitId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.ok) {
+        const updatedHabit = await response.json();
+        setHabit((prevHabits) =>
+          prevHabits.map((habit) =>
+            habit.id === habitId ? { ...habit, datesTracked: updatedHabit.datesTracked } : habit
+          )
+        );
+        alert("Fecha de seguimiento agregada exitosamente!");
+        return true;
+      } else {
+        const data = await response.json();
+        alert(`Error: ${data.message || "Algo salió mal"}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al agregar la fecha de seguimiento:", error);
+      alert("Error inesperado al agregar la fecha de seguimiento.");
+      return false;
+    }
+  };
+  
 
   return (
-    <AppContext.Provider value={{setToken , createUser, login, verifyEmail, changePassword, Token, dataUser, setDataUser, getUserData }}>
+    <AppContext.Provider value={{trackHabitDate,deleteHabit,createHabit,setToken , createUser, login, verifyEmail, changePassword, Token, dataUser, setDataUser, getUserData }}>
       {children}
     </AppContext.Provider>
   );

@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { View, Text, Button } from "react-native";
 import { useAppContext } from "@/context/Appcontext";
-
+import { Link } from "expo-router";
 
 export default function Habits() {
   const { Token, getUserData, dataUser } = useAppContext();
+
+  
+  
 
   useEffect(() => {
     if (Token.rol && Token.id) {
@@ -12,6 +15,10 @@ export default function Habits() {
     }
   }, []);
 
+  
+  
+  
+  
   return (
     <View className="flex-1 items-center justify-center bg-amarillo">
       <Text className="text-xl font-bold">Habitos</Text>
@@ -30,17 +37,18 @@ export default function Habits() {
             <View>
               <Text>Habitos</Text>
               {dataUser.habits.map((habit, index) => (
-                <View key={index} className="text-lg">
-                  <Text>Name {index + 1}: {habit.name}</Text>
+                <View key={habit.id} className="text-lg bg-amber-900 m-4">
+                  <Text>Name: {habit.name}</Text>
                   <Text>meta : {habit.goalType}</Text>
-                  <Text>id : {habit.id}</Text>
+                  <Text>Habit id : {habit.id}</Text>
                 </View >
-
               ))}
             </View>
           ) : (
             <Text>No hay hábitos disponibles.</Text>
           )}
+
+          
 
         </View>
       )}

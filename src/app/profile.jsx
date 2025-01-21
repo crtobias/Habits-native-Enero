@@ -11,8 +11,7 @@ export default function Profile() {
       <Text className="text-xl font-bold">Perfil</Text>
       <Text>Name: {dataUser.name}</Text>
       <Text>Email: {dataUser.email}</Text>
-
-      
+      <Text>Email: {dataUser.id}</Text>
     </View>
   );
 }
