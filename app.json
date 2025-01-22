@@ -16,6 +16,22 @@
       ]
     ],
     "name": "my-app",
-    "slug": "my-app"
+    "slug": "my-app",
+    "extra": {
+      "router": {
+        "origin": "https://n"
+      },
+      "eas": {
+        "projectId": "72d9a343-b48c-4a7f-a779-189b15564fb8"
+      }
+    },
+    "android": {
+      "package": "com.tobiascr.myapp"
+    },
+    "splash": {
+      "image": "./assets/Add.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    }
   }
 }
