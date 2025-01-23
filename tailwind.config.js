@@ -8,7 +8,8 @@ module.exports = {
         morado: "#221848", 
         lavanda: "#9FA4D9",
         rosa: "#FFC6F3", 
-        amarillo: "#FBD5CC", 
+        amarillo: "#FBD5CC",
+        card: "#6062D6",
         customGray: {
           light: "#D1D5DB",
           DEFAULT: "#6B7280",

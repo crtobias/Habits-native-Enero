@@ -3,7 +3,7 @@ import { Slot, usePathname } from "expo-router";
 import { View, Image , Text} from "react-native";
 import { Link, } from "expo-router";
 import { AppProvider } from "@/context/Appcontext";
-
+import { StatusBar } from "expo-status-bar";
 
 export default function Layout() {
   const pathname = usePathname()
@@ -11,6 +11,7 @@ export default function Layout() {
 
   return (
     <AppProvider>
+      <StatusBar style="dark" />
       <View className="flex flex-1">
         {pathname !== "/" && <Header />}
         <View className="flex-1 ml-12">
@@ -44,7 +45,7 @@ function Header() {
         >
           <View className="bg-lavanda w-full h-40 rounded-tl-2xl rounded-bl-2xl flex justify-center items-center">
           <Image
-              source={require("../assets/Add.png")}
+              source={require("../assets/AddNav.png")}
               style={{ width: 24, height: 24, marginBottom: 4 }}
             />
           </View>

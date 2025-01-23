@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button,ScrollView } from "react-native";
 import { useAppContext } from "@/context/Appcontext";
 import { Link } from "expo-router";
+import Card from "@/components/card";
 
 export default function Habits() {
   const { Token, getUserData, dataUser } = useAppContext();
@@ -20,38 +21,21 @@ export default function Habits() {
   
   
   return (
-    <View className="flex-1 items-center justify-center bg-amarillo">
-      <Text className="text-xl font-bold">Habitos</Text>
-      <Text className="text-lg">datos de token</Text>
-      <Text>rol: {Token.rol}  id: {Token.id}</Text>
+    <ScrollView className="flex-1 bg-amarillo border" contentContainerStyle={{ alignItems: "center", paddingVertical: 20 }}>
+      <Text></Text>
       {dataUser && (
-        <View>
-          <Text className="text-lg">Datos de usuario</Text>
-          <Text className="text-lg"></Text>
-          <Text className="text-lg"></Text>
-          <Text className="text-lg">Name: {dataUser.name}</Text>
-          <Text className="text-lg">Email: {dataUser.email}</Text>
-          <Text className="text-lg">Status: {dataUser.status}</Text>
-
-          {dataUser && dataUser.habits && dataUser.habits.length > 0 ? (
-            <View>
-              <Text>Habitos</Text>
+        <View className="w-full items-center">
+          {dataUser.habits && dataUser.habits.length > 0 ? (
+            <View className="w-4/5 items-center">
               {dataUser.habits.map((habit, index) => (
-                <View key={habit.id} className="text-lg bg-amber-900 m-4">
-                  <Text>Name: {habit.name}</Text>
-                  <Text>meta : {habit.goalType}</Text>
-                  <Text>Habit id : {habit.id}</Text>
-                </View >
+                <Card key={index} habit={habit} />
               ))}
             </View>
           ) : (
             <Text>No hay hábitos disponibles.</Text>
           )}
-
-          
-
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };

@@ -6,7 +6,7 @@ export default function Create() {
   const { createHabit, dataUser } = useAppContext();
   
   const [habitName, setHabitName] = useState("");
-  const [goalType, setGoalType] = useState("ADOPT"); 
+  const [goalType, setGoalType] = useState("adopt"); 
 
   const handleSubmit = async () => {
     if (!habitName) {
@@ -25,7 +25,7 @@ export default function Create() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-rosa p-4">
+    <View className="flex-1 items-center justify-center bg-lavanda p-4">
       <Text className="text-2xl mb-4">Crear Hábito</Text>
 
  
@@ -47,28 +47,28 @@ export default function Create() {
     
       <View className="flex-row justify-around mb-6 w-full">
         <TouchableOpacity
-          onPress={() => setGoalType("ADOPT")}
+          onPress={() => setGoalType("adopt")}
           style={{
-            backgroundColor: goalType === "ADOPT" ? "#6a4dfd" : "#ccc",
+            backgroundColor: goalType === "adopt" ? "#6a4dfd" : "#ccc",
             padding: 10,
             borderRadius: 5,
           }}
         >
-          <Text className="text-white">ADOPT</Text>
+          <Text className="text-white">Adopt</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setGoalType("REMOVE")}
+          onPress={() => setGoalType("remove")}
           style={{
-            backgroundColor: goalType === "REMOVE" ? "#6a4dfd" : "#ccc",
+            backgroundColor: goalType === "remove" ? "#6a4dfd" : "#ccc",
             padding: 10,
             borderRadius: 5,
           }}
         >
-          <Text className="text-white">REMOVE</Text>
+          <Text className="text-white">Remove</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Botón para crear el hábito */}
+      
       <Button title="Crear Hábito" onPress={handleSubmit} />
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Alert, TextInput, Text } from "react-native";
+import { View, Button, Alert, TextInput, Text, Image } from "react-native";
 import { Link } from "expo-router";
 import { useAppContext } from "@/context/Appcontext";
 
@@ -86,7 +86,7 @@ export default function Page() {
     <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
 
 
-      <View className="flex flex-row gap-2 mt-8">
+      <View className="flex flex-row gap-2 mt-8 bo">
         <Button
           title="Login"
           onPress={handleactivarLogin}
@@ -133,7 +133,7 @@ export default function Page() {
 
 
       {log && (
-        <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
+        <View className="flex-1 items-center w-screen  justify-center bg-amarillo">
           <Text>Login</Text>
           <TextInput
             style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
@@ -164,8 +164,15 @@ export default function Page() {
       )}
 
       {isLoggedIn && (
-        <Link href="/habits" className="mt-4 text-blue-600 mb-10">
-          <Text className="text-xl">Ya puedes ingresar</Text>
+        <Link href="/habits" className="mb-20">
+          <View  className="items-center text-center gap-3">
+            <Text className="text-xl text-lavanda">Ya puedes ingresar</Text>
+            <Image
+            className=""
+              source={require("../assets/cont.png")}
+              style={{ width: 75, height: 85, marginBottom: 5 }}
+            />
+          </View>
         </Link>
       )}
 

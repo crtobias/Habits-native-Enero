@@ -4,14 +4,15 @@ import { useAppContext } from "@/context/Appcontext";
 
 export default function Profile() {
   const { dataUser } = useAppContext();
+
+
+  
   return (
     <View className="flex-1 items-center justify-center bg-rosa">
-
-
       <Text className="text-xl font-bold">Perfil</Text>
       <Text>Name: {dataUser.name}</Text>
       <Text>Email: {dataUser.email}</Text>
-      <Text>Email: {dataUser.id}</Text>
+      <Text>Id: {dataUser.id}</Text>
     </View>
   );
 }
