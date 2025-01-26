@@ -25,8 +25,8 @@ export default function Create() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-lavanda p-4">
-      <Text className="text-2xl mb-4">Crear Hábito</Text>
+    <View className="flex-1 items-center justify-center bg-lavanda p-4 ">
+      <Text className="text-2xl mb-4 ">Crear Hábito</Text>
 
  
       <TextInput
@@ -45,7 +45,7 @@ export default function Create() {
       />
 
     
-      <View className="flex-row justify-around mb-6 w-full">
+      <View className="flex-row justify-around mb-6 w-full ">
         <TouchableOpacity
           onPress={() => setGoalType("adopt")}
           style={{
@@ -54,7 +54,7 @@ export default function Create() {
             borderRadius: 5,
           }}
         >
-          <Text className="text-white">Adopt</Text>
+          <Text className="text-white ">Adopt</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setGoalType("remove")}
@@ -69,7 +69,15 @@ export default function Create() {
       </View>
 
       
-      <Button title="Crear Hábito" onPress={handleSubmit} />
+
+      <TouchableOpacity
+          onPress={handleSubmit}
+          className="bg-customGray-dark p-3 border border-gray-800 rounded-lg "
+        >
+          <Text className="text-white ">Crear Habito</Text>
+        </TouchableOpacity>
+
+      
     </View>
   );
 }

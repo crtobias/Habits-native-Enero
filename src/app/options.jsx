@@ -11,7 +11,7 @@ export default function Options() {
   };
   return (
     <View className="flex-1 items-center justify-center bg-lavanda">
-      <Link href="/" className="text-xl font-bold">
+      <Link href="/" className="text-xl font-bold " >
         <Button title="Cerrar sesion"
           onPress={handleDeleteToken}></Button>
       </Link>

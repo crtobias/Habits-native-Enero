@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Alert, TextInput, Text, Image } from "react-native";
+import { View, Button, Alert, TextInput, Text, Image, TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
 import { useAppContext } from "@/context/Appcontext";
 
@@ -35,11 +35,10 @@ export default function Page() {
     const result = await login(name, email, password);
     if (result == 1) {
       setIsLoggedIn(true);
-    } else if (result == 2) {
-      setIsNotVerify(true)
     } else if (result == 3) {
       SetincorrectoPas(true)
     } else {
+      setIsNotVerify(true)
       alert('occurio un error inesperado verifique su email o name o intente mas tarde')
     }
   };
@@ -65,18 +64,21 @@ export default function Page() {
     setCreate(false)
     SetincorrectoPas(false)
     SetincorrectoPasDos(false)
+    setIsNotVerify(false)
   }
   const handleactivarCreate = async () => {
     setCreate(true)
     setLog(false)
     SetincorrectoPas(false)
     SetincorrectoPasDos(false)
+    setIsNotVerify(false)
   }
 
   const handleChangePass = () => {
     setLog(false)
     SetincorrectoPasDos(true)
     SetincorrectoPas(false)
+    setIsNotVerify(false)
   }
 
   const isFormComplete = (email || name) && password;
@@ -86,47 +88,62 @@ export default function Page() {
     <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
 
 
-      <View className="flex flex-row gap-2 mt-8 bo">
-        <Button
-          title="Login"
+      <View className="flex flex-row gap-2 mt-8">
+        <TouchableOpacity
+          className="bg-amarillooscuro px-4 py-2 rounded border border-gray-600"
           onPress={handleactivarLogin}
-        ></Button>
-        <Button
-          title="Create"
+        >
+          <Text className="text-white font-bold">Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-amarillooscuro px-4 py-2 rounded border border-gray-600"
           onPress={handleactivarCreate}
-        ></Button>
+        >
+          <Text className="text-white font-bold">Create</Text>
+        </TouchableOpacity>
       </View>
 
       <Text className="text-xxs mt-14">Habits</Text>
 
       {create && (
-        <View className="flex-1 items-center w-screen -ml-12 justify-center bg-amarillo">
-          Crear Usuario
+        <View className="flex-1 items-center w-screen  justify-center bg-amarillo">
+          <Text>Crear Usuario</Text>
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Nombre"
             value={name}
             onChangeText={setName}
           />
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Correo electrónico"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
             placeholder="Contraseña"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
-          <Button
-            title="Crear Usuario"
+
+          <TouchableOpacity
+            className="bg-amarillooscuro px-4 py-2 rounded border border-gray-600 mb-12"
             onPress={handleCreate}
             disabled={!isFormCreateComplete}
-          />
+          >
+
+            <Text className="text-white font-bold">
+              {isFormCreateComplete ? "Crear" : "Completa los campos"}
+            </Text>
+
+          </TouchableOpacity>
+
+
+
+
         </View>
       )}
 
@@ -136,39 +153,45 @@ export default function Page() {
         <View className="flex-1 items-center w-screen  justify-center bg-amarillo">
           <Text>Login</Text>
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Nombre"
             value={name}
             onChangeText={setName}
+
           />
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Correo electrónico"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
             placeholder="Contraseña"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
-          <Button
-            title="Iniciar Sesión"
+
+          <TouchableOpacity
+            className="bg-amarillooscuro px-4 py-2 rounded border border-gray-600"
             onPress={handleLogin}
             disabled={!isFormComplete}
-          />
+          >
+            <Text className="text-white font-bold">
+              {isFormComplete ? "Login" : "Completa los campos"}
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
 
       {isLoggedIn && (
         <Link href="/habits" className="mb-20">
-          <View  className="items-center text-center gap-3">
+          <View className="items-center text-center gap-3">
             <Text className="text-xl text-lavanda">Ya puedes ingresar</Text>
             <Image
-            className=""
+              className=""
               source={require("../assets/cont.png")}
               style={{ width: 75, height: 85, marginBottom: 5 }}
             />
@@ -181,51 +204,65 @@ export default function Page() {
         <View>
           <Text>No estas verificado quieres verificarte?</Text>
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Correo electrónico"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
-          <Button
-            title="verificar"
+
+
+          <TouchableOpacity
+            className="mb-10 items-center bg-amarillooscuro px-4 py-2 rounded border border-gray-600"
             onPress={handleVerify}
-          />
+          >
+            <Text className="text-white font-bold">
+              Enviar Verificacion
+            </Text>
+          </TouchableOpacity>
+
         </View>
       )}
 
       {incorrectoPas && (
         <View>
-          <Button
-            title="Queres cambiar el password?"
+
+          <TouchableOpacity
+            className="border bg-amarillooscuro px-4 py-2 rounded border-gray-600 mb-12"
             onPress={handleChangePass}
-          />
+          >
+            <Text className="text-white font-bold">Queres cambiar el Password?</Text>
+          </TouchableOpacity>
         </View>
       )}
 
       {incorrectoPasDos && (
-        <View>
+        <View className="items-center">
           <Text>Cambiar Password</Text>
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10 }}
             placeholder="Correo electrónico"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
           <TextInput
-            style={{ width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
+            style={{ backgroundColor: '#E3B1A3', width: 300, height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 }}
             placeholder="New Password"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
 
-          <Button
-            title="Cambiar"
+
+
+          <TouchableOpacity
+            className="bg-amarillooscuro px-4 py-2 rounded border-gray-600"
             onPress={handleNewPassword}
             disabled={!isFormComplete}
-          />
+          >
+            <Text className="text-white font-bold">Cambiar</Text>
+          </TouchableOpacity>
 
         </View>
       )}

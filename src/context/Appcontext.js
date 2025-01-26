@@ -9,7 +9,7 @@ export const AppProvider = ({ children }) => {
   const [Token, setToken] = useState()
 
   const [dataUser, setDataUser] = useState()
-  const [habits , setHabit] = useState([])
+  const [habits, setHabit] = useState([])
 
   const verifyEmail = async (email) => {
     try {
@@ -182,7 +182,7 @@ export const AppProvider = ({ children }) => {
   };
 
 
-  const createHabit = async (name, goalType,userId) => {
+  const createHabit = async (name, goalType, userId) => {
     try {
       const response = await fetch("http://localhost:3000/habit/create", {
         method: "POST",
@@ -195,10 +195,10 @@ export const AppProvider = ({ children }) => {
           userId,
         }),
       });
-  
+
       if (response.ok) {
         const newHabit = await response.json();
-        
+
         setHabit((prevHabits) => [...prevHabits, newHabit]);
         alert("Hábito creado exitosamente!");
         return true;
@@ -213,7 +213,7 @@ export const AppProvider = ({ children }) => {
       return false;
     }
   };
-  
+
 
   const deleteHabit = async (habitId) => {
     try {
@@ -223,7 +223,7 @@ export const AppProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
         setHabit((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
         alert("Hábito eliminado exitosamente!");
@@ -239,7 +239,7 @@ export const AppProvider = ({ children }) => {
       return false;
     }
   };
-  
+
 
 
   const trackHabitDate = async (habitId) => {
@@ -250,7 +250,7 @@ export const AppProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
         const updatedHabit = await response.json();
         setHabit((prevHabits) =>
@@ -262,14 +262,14 @@ export const AppProvider = ({ children }) => {
         return true;
       } else {
         const data = await response.json();
-        
-       
+
+
         if (response.status === 400) {
           alert("Ya agregaste la fecha de seguimiento el día de hoy.");
         } else {
           alert(`Error: ${data.message || "Algo salió mal"}`);
         }
-  
+
         return false;
       }
     } catch (error) {
@@ -278,11 +278,14 @@ export const AppProvider = ({ children }) => {
       return false;
     }
   };
-  
-  
+
+
+
+
+
 
   return (
-    <AppContext.Provider value={{trackHabitDate,deleteHabit,createHabit,setToken , createUser, login, verifyEmail, changePassword, Token, dataUser, setDataUser, getUserData }}>
+    <AppContext.Provider value={{ trackHabitDate, deleteHabit, createHabit, setToken, createUser, login, verifyEmail, changePassword, Token, dataUser, setDataUser, getUserData }}>
       {children}
     </AppContext.Provider>
   );

@@ -11,7 +11,7 @@ export default function Layout() {
 
   return (
     <AppProvider>
-      <StatusBar style="dark" />
+      <StatusBar style="dark" /> 
       <View className="flex flex-1">
         {pathname !== "/" && <Header />}
         <View className="flex-1 ml-12">
@@ -24,7 +24,7 @@ export default function Layout() {
 
 function Header() {
   return (
-    <View>
+    <View className="z-50">
       <View className="bg-morado w-12 min-h-screen flex flex-col justify-start gap-1 items-center absolute left-0">
 
         <Link
