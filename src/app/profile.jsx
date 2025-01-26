@@ -81,10 +81,14 @@ export default function Profile() {
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <View className="flex-1 items-center justify-center bg-rosa text-center">
-      <Text className="mb-6 text-lg font">
-       Hola {dataUser.name} Estas son tus estadisticas Habits 🙂.
-        </Text>
+    <View className="flex-1 items-center justify-center bg-rosa text-center p-5">
+      <Text className="text-lg font">
+       Hola {dataUser.name}
+      </Text>
+
+      <Text className="mb-5">
+       Estas son tus estadisticas Habits 🙂.
+      </Text>
 
       {/* Mostrar gráfico pizza desde el primer día hasta hoy */}
       <Text >Uso de la app desde tu Primer Registro de actividad</Text>
