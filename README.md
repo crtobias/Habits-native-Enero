@@ -36,12 +36,5 @@ Para generar un APK de la aplicación, puedes usar el siguiente comando con Expo
 
 Recuerda que para usar este comando, debes estar logueado en Expo.
 
-## Tecnologías utilizadas
 
-- **Expo**
-- **React Native**
-- **NativeWind (Tailwind CSS)**
-- **JWT Decode**
-- **React Native Chart Kit**
-- **React Native Modal**
 
