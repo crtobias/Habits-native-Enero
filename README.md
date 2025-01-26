@@ -1,5 +1,5 @@
 # Habits App - Frontend
-
+### Backend: https://github.com/crtobias/Habits-backend-Enero
 Este proyecto forma parte de un reto de 12 meses, donde crearé una nueva aplicación cada mes. Este mes, decidí crear una app para adoptar y eliminar hábitos, utilizando las siguientes tecnologías:
 
 - **React Native** (para el desarrollo móvil)
